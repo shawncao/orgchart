@@ -1,12 +1,12 @@
 ﻿/*!
-* File Created: February 2, 2012 
-* Created by Shawn Cao for rendering org chart in HTML5 Canvas
-* 
-*/
+ * File Created: February 2, 2012 
+ * Created by Shawn Cao for rendering org chart in HTML5 Canvas
+ * 
+ */
 
 /**
-* utility to help complete some basic tasks
-*/
+ * utility to help complete some basic tasks
+ */
 var Utility = new function () {
     //solid object
     this.IsSolid = function (obj) {
@@ -119,12 +119,15 @@ var Utility = new function () {
     this.Font = "10px Sans-Serif";
     this.SearchUI = 'search';
     this.LineWidth = 2;
-    this.ImageDimen = { width: 70, height: 70 };
+    this.ImageDimen = {
+        width: 70,
+        height: 70
+    };
 };
 
 /**
-* define cube to hold each node
-*/
+ * define cube to hold each node
+ */
 function Cube(id, parent, data) {
     if (id == undefined || parent == undefined || data == undefined) {
         throw 'ID, Parent, Name are required field for a cube';
@@ -144,11 +147,17 @@ function Cube(id, parent, data) {
     this.TotalHeight = 0;
 
     this.Size = 1;
-    this.Dimen = { width: Utility.MinCubeWidth, height: Utility.TextMargin };
+    this.Dimen = {
+        width: Utility.MinCubeWidth,
+        height: Utility.TextMargin
+    };
     this.Span = 0;
     this.Lines = [];
     this.Children = [];
-    this.Position = { x: Utility.CubeGap, y: Utility.LevelGap };
+    this.Position = {
+        x: Utility.CubeGap,
+        y: Utility.LevelGap
+    };
 
     //if having search, this is the Y position starting search area
     this.SeperatorY = 999999;
@@ -263,8 +272,7 @@ Cube.prototype.ComputeDimension = function () {
                 this.AddLine(line);
             }
         }
-    }
-    else {
+    } else {
         this.Dimen.width = this.Image.dim.width + 2 * Utility.TextMargin;
         this.Dimen.height = this.Image.dim.height + 2 * Utility.TextMargin;
         if (!Utility.IsNull(this.Image.text)) {
@@ -316,8 +324,8 @@ Cube.prototype.FindNode = function (id) {
 
 //identify whether a position is inside me or not
 Cube.prototype.ClickMe = function (x, y) {
-    return x > this.Position.x && (x < this.Position.x + this.Dimen.width)
-        && y > this.Position.y && y < (this.Position.y + this.Dimen.height);
+    return x > this.Position.x && (x < this.Position.x + this.Dimen.width) &&
+        y > this.Position.y && y < (this.Position.y + this.Dimen.height);
 };
 
 //Draw function to draw current node on canvas
@@ -351,15 +359,27 @@ Cube.prototype.Draw = function () {
 
     //draw each line of text to display
     for (var i = 0; i < this.Lines.length; ++i) {
-        Utility.DrawText(this.Context, { x: sx, y: sy }, this.Lines[i], this.Color);
+        Utility.DrawText(this.Context, {
+            x: sx,
+            y: sy
+        }, this.Lines[i], this.Color);
         sy += Utility.TextMargin + Utility.LineHeight;
     }
 
     //draw search area
     if (this.HasSearch()) {
         this.SeperatorY = this.Position.y + this.Dimen.height - 2 * Utility.TextMargin - Utility.LineHeight;
-        Utility.DrawSeperator(this.Context, { x: this.Position.x + Utility.TextMargin, y: this.SeperatorY }, { x: this.Position.x + this.Dimen.width - Utility.TextMargin, y: this.SeperatorY });
-        Utility.DrawText(this.Context, { x: this.Position.x + this.Dimen.width - Utility.TextMargin - this.GetTextWidth(Utility.SearchUI), y: this.SeperatorY + Utility.LineHeight + Utility.TextMargin }, Utility.SearchUI, Utility.CommandColor);
+        Utility.DrawSeperator(this.Context, {
+            x: this.Position.x + Utility.TextMargin,
+            y: this.SeperatorY
+        }, {
+            x: this.Position.x + this.Dimen.width - Utility.TextMargin,
+            y: this.SeperatorY
+        });
+        Utility.DrawText(this.Context, {
+            x: this.Position.x + this.Dimen.width - Utility.TextMargin - this.GetTextWidth(Utility.SearchUI),
+            y: this.SeperatorY + Utility.LineHeight + Utility.TextMargin
+        }, Utility.SearchUI, Utility.CommandColor);
     }
 
     //draw all children
@@ -370,21 +390,39 @@ Cube.prototype.Draw = function () {
     //draw connections between me and my direct children
     if (this.Children.length > 0) {
         //1. vertical down
-        var start = { x: this.Position.x + this.Dimen.width / 2, y: this.Position.y + this.Dimen.height };
-        Utility.DrawConnection(this.Context, start, { x: start.x, y: start.y + Utility.LevelGap / 2 });
+        var start = {
+            x: this.Position.x + this.Dimen.width / 2,
+            y: this.Position.y + this.Dimen.height
+        };
+        Utility.DrawConnection(this.Context, start, {
+            x: start.x,
+            y: start.y + Utility.LevelGap / 2
+        });
 
         //2. vertical for everyone
         for (var i = 0; i < this.Children.length; ++i) {
-            var s = { x: this.Children[i].Position.x + this.Children[i].Dimen.width / 2, y: this.Children[i].Position.y };
-            Utility.DrawConnection(this.Context, s, { x: s.x, y: s.y - Utility.LevelGap / 2 });
+            var s = {
+                x: this.Children[i].Position.x + this.Children[i].Dimen.width / 2,
+                y: this.Children[i].Position.y
+            };
+            Utility.DrawConnection(this.Context, s, {
+                x: s.x,
+                y: s.y - Utility.LevelGap / 2
+            });
         }
 
         //3. if having more than 1 children, draw a horizonal line to connect them all
         if (this.Children.length > 1) {
             var first = this.Children[0];
-            var ss = { x: first.Position.x + first.Dimen.width / 2, y: first.Position.y - Utility.LevelGap / 2 };
+            var ss = {
+                x: first.Position.x + first.Dimen.width / 2,
+                y: first.Position.y - Utility.LevelGap / 2
+            };
             var last = this.Children[this.Children.length - 1];
-            var ee = { x: last.Position.x + last.Dimen.width / 2, y: last.Position.y - Utility.LevelGap / 2 };
+            var ee = {
+                x: last.Position.x + last.Dimen.width / 2,
+                y: last.Position.y - Utility.LevelGap / 2
+            };
             Utility.DrawConnection(this.Context, ss, ee);
         }
     }
@@ -393,9 +431,9 @@ Cube.prototype.Draw = function () {
 };
 
 /**
-* define the whole org chart to holds all lines/nodes
-* draw function is the final call to render it
-*/
+ * define the whole org chart to holds all lines/nodes
+ * draw function is the final call to render it
+ */
 function OrgChart(cid) {
     this.CanvasId = cid;
     this.Canvas = document.getElementById(cid);
@@ -563,8 +601,10 @@ OrgChart.prototype.Draw = function () {
         }
 
         //set the final viewable canvas dimension
-        this.Canvas.width = this.Final.RealSpan() + 2 * Utility.CubeGap;
-        this.Canvas.height = this.Final.TotalHeight;
+        var dpr = window.devicePixelRatio || 1;
+        this.Canvas.width = dpr * (this.Final.RealSpan() + 2 * Utility.CubeGap);
+        this.Canvas.height = dpr * this.Final.TotalHeight;
+        this.Canvas2D.scale(dpr, dpr);
 
         //draw the final one
         this.Final.Draw();
