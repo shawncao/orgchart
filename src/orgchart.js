@@ -7,6 +7,7 @@
 /**
  * utility to help complete some basic tasks
  */
+var dpr = window.devicePixelRatio || 1;
 var Utility = new function () {
     //solid object
     this.IsSolid = function (obj) {
@@ -324,6 +325,8 @@ Cube.prototype.FindNode = function (id) {
 
 //identify whether a position is inside me or not
 Cube.prototype.ClickMe = function (x, y) {
+    x /= dpr;
+    y /= dpr;
     return x > this.Position.x && (x < this.Position.x + this.Dimen.width) &&
         y > this.Position.y && y < (this.Position.y + this.Dimen.height);
 };
@@ -601,7 +604,6 @@ OrgChart.prototype.Draw = function () {
         }
 
         //set the final viewable canvas dimension
-        var dpr = window.devicePixelRatio || 1;
         this.Canvas.width = dpr * (this.Final.RealSpan() + 2 * Utility.CubeGap);
         this.Canvas.height = dpr * this.Final.TotalHeight;
         this.Canvas2D.scale(dpr, dpr);
