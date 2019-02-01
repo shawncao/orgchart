@@ -10,11 +10,11 @@
             var orgchart = new OrgChart('chart');
             Utility.ImageDimen = { width: 70, height: 70 };
             orgchart.Push(new Cube(1, 0, { n: "1", c: 'blue', i: { src: 'images/a.jpg', text: ['Steve (alias)', 'CEO', '425-666-9999']} }));
-            orgchart.Push(new Cube(2, 1, { n: "2", c: 'red', i: { src: 'images/b.jpg', text: ['Bill (alias)', 'President', '425-666-8888']} }));
+            orgchart.Push(new Cube(2, 1, { n: "2", c: 'red', i: { src: 'images/b.jpg', text: ['Bill (alias)', 'President', '425-666-8888']}, m: '3 directs'}));
             orgchart.Push(new Cube(4, 2, { n: "3", c: 'blue', i: { src: 'images/c.jpg', text: ['James (alias)', 'CVP', '425-666-7777']} }));
             orgchart.Push(new Cube(3, 2, { n: "4", c: 'blue', i: { src: 'images/d.jpg', text: ['Shawn (alias)', 'SVP', '425-666-6666']} }));
             orgchart.Push(new Cube(5, 2, { n: "5", c: 'blue', i: { src: 'images/e.jpg', text: ['Jay (alias)', 'VP', '425-666-3333']} }));
-            orgchart.Push(new Cube(6, 4, { n: "6", c: 'blue', i: { src: 'images/f.jpg'} }));
+            orgchart.Push(new Cube(6, 4, { n: "6", c: 'blue', i: { src: 'images/f.jpg'}, m: 'xyz' }));
             orgchart.NodeClick = function (id) {
                 alert('click:' + id);
             };

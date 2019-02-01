@@ -138,6 +138,7 @@ function Cube(id, parent, data) {
     this.Name = data.n;
     this.Color = data.c;
     this.Image = data.i;
+    this.Meta = data.m;
     if (!Utility.IsNull(this.Image) && Utility.IsNull(this.Image.dim)) {
         this.Image.dim = Utility.ImageDimen;
     }
@@ -175,6 +176,7 @@ Cube.prototype.HasSearch = function () {
 
 //identify whether a point is in the search area or not
 Cube.prototype.IsInSearch = function (x, y) {
+    y /= dpr;
     return this.HasSearch() && y > this.SeperatorY;
 };
 
@@ -379,10 +381,13 @@ Cube.prototype.Draw = function () {
             x: this.Position.x + this.Dimen.width - Utility.TextMargin,
             y: this.SeperatorY
         });
+        
+        // search area display meta or default to search UI
+        var text = this.Meta || Utility.SearchUI;
         Utility.DrawText(this.Context, {
-            x: this.Position.x + this.Dimen.width - Utility.TextMargin - this.GetTextWidth(Utility.SearchUI),
+            x: this.Position.x + this.Dimen.width - Utility.TextMargin - this.GetTextWidth(text),
             y: this.SeperatorY + Utility.LineHeight + Utility.TextMargin
-        }, Utility.SearchUI, Utility.CommandColor);
+        }, text, Utility.CommandColor);
     }
 
     //draw all children
