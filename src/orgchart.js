@@ -79,9 +79,9 @@ var Utility = new function () {
     };
 
     //draw rectangle
-    this.DrawRect = function (canvas, position, dim) {
+    this.DrawRect = function (canvas, position, dim, bg) {
         canvas.strokeStyle = Utility.CubeBd;
-        canvas.fillStyle = Utility.CubeBg;
+        canvas.fillStyle = bg;
         var lw = Utility.LineWidth;
         canvas.lineWidth = lw;
         canvas.fillRect(position.x + lw, position.y + lw, dim.width - 2 * lw, dim.height - 2 * lw);
@@ -139,6 +139,8 @@ function Cube(id, parent, data) {
     this.Color = data.c;
     this.Image = data.i;
     this.Meta = data.m;
+    this.IsLeaf = data.l | false;
+    this.Background = data.b || Utility.CubeBg;
     if (!Utility.IsNull(this.Image) && Utility.IsNull(this.Image.dim)) {
         this.Image.dim = Utility.ImageDimen;
     }
@@ -335,9 +337,8 @@ Cube.prototype.ClickMe = function (x, y) {
 
 //Draw function to draw current node on canvas
 Cube.prototype.Draw = function () {
-    //    this.Dimen.height = this.OC.LevelHeight[this.Level];
     //draw the rectangle
-    Utility.DrawRect(this.Context, this.Position, this.Dimen);
+    Utility.DrawRect(this.Context, this.Position, this.Dimen, this.Background);
 
     //content draw start point
     var sx = this.Position.x + Utility.TextMargin;
@@ -396,7 +397,7 @@ Cube.prototype.Draw = function () {
     });
 
     //draw connections between me and my direct children
-    if (this.Children.length > 0) {
+    if (this.Children.length > 0 && !this.IsLeaf) {
         //1. vertical down
         var start = {
             x: this.Position.x + this.Dimen.width / 2,
