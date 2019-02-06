@@ -7,7 +7,9 @@
 /**
  * utility to help complete some basic tasks
  */
-var dpr = window.devicePixelRatio || 1;
+// var dpr = window.devicePixelRatio || 1;
+// because the chart is optimized for 800px * 600px, set scale factor by that
+var dpr = window.innerWidth / 800.0;
 var Utility = new function () {
     //solid object
     this.IsSolid = function (obj) {
@@ -117,7 +119,7 @@ var Utility = new function () {
     this.CubeBd = "rgb(181, 217, 234)";
     this.LineColor = "rgb(51,136,221)";
     this.CommandColor = 'gray';
-    this.Font = "10px Sans-Serif";
+    this.Font = "1em Sans-Serif";
     this.SearchUI = 'search';
     this.LineWidth = 2;
     this.ImageDimen = {
@@ -352,7 +354,6 @@ Cube.prototype.Draw = function () {
         img.onload = function () {
             //this line will solve the quick render problem in canvas
             window.setTimeout("void()", "1000");
-            //        this.cube.Context.drawImage(this, this.cube.Position.x, this.cube.Position.y, this.cube.Dimen.width, this.cube.Dimen.height);
             var dim = this.cube.Image.dim;
             if (Utility.IsNull(dim)) {
                 dim = Utility.ImageDimen;
