@@ -72,6 +72,27 @@
                 alert('search:' + id);
             };
             orgchart.Draw();
+
+            // draw pie
+            window.setTimeout(function () {
+                orgchart.Pie([{
+                        key: "Satisfied",
+                        value: 1043
+                    },
+                    {
+                        key: "Neutral",
+                        value: 563
+                    },
+                    {
+                        key: "Unsatisfied",
+                        value: 510
+                    },
+                    {
+                        key: "No comment",
+                        value: 175
+                    }
+                ], true);
+            }, 2000);
         });
     </script>
 </head>

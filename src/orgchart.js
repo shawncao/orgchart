@@ -9,7 +9,7 @@
  */
 // var dpr = window.devicePixelRatio || 1;
 // because the chart is optimized for 800px * 600px, set scale factor by that
-var dpr = window.innerWidth / 800.0;
+var dpr = Math.min(window.innerWidth, 1600) / 800.0;
 var Utility = new function () {
     //solid object
     this.IsSolid = function (obj) {
@@ -353,7 +353,7 @@ Cube.prototype.Draw = function () {
         img.cube = this;
         img.onload = function () {
             //this line will solve the quick render problem in canvas
-            window.setTimeout("void()", "1000");
+            window.setTimeout(function () {}, 1000);
             var dim = this.cube.Image.dim;
             if (Utility.IsNull(dim)) {
                 dim = Utility.ImageDimen;
@@ -383,7 +383,7 @@ Cube.prototype.Draw = function () {
             x: this.Position.x + this.Dimen.width - Utility.TextMargin,
             y: this.SeperatorY
         });
-        
+
         // search area display meta or default to search UI
         var text = this.Meta || Utility.SearchUI;
         Utility.DrawText(this.Context, {
@@ -617,5 +617,62 @@ OrgChart.prototype.Draw = function () {
 
         //draw the final one
         this.Final.Draw();
+    }
+};
+
+// add a simple pie chart drawing function
+OrgChart.prototype.Pie = function (data, donut) {
+    var colors = ["#fe3", "#f62", "#59f", "#978", "#abc", "#f3d", "#fc8", "#41e"];
+    var w = this.Canvas.width;
+    var h = this.Canvas.height;
+    var ctx = this.Canvas2D;
+    ctx.clearRect(0, 0, w, h);
+
+    // center of the pie and radius
+    var x = w / dpr / 2;
+    var y = h / dpr / 2;
+    var r = Math.min(w, h) / 3 / dpr;
+
+    // total value
+    var total = data.reduce(function (sum, item) {
+        return sum + item.value;
+    }, 0.0);
+
+    // define a function to draw a slice
+    var slice = function (c, r, start, end) {
+        ctx.fillStyle = c;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.arc(x, y, r, start, end);
+        ctx.fill();
+    };
+
+    // Start at the top
+    var dr = !!donut ? r / 3 : 0;
+    var index = 0;
+    var bound = colors.length;
+    var start = 0;
+    data.forEach(function (item) {
+        var angle = (item.value / total) * 2 * Math.PI;
+        slice(colors[index++ % bound], r, start, start + angle);
+
+        // place the text
+        var tx = x + (dr + r) / 2 * Math.cos(start + angle / 2);
+        var ty = y + (dr + r) / 2 * Math.sin(start + angle / 2);
+
+        // measure text width and shift x to fit half
+        var text = item.key + " (" + Math.round(item.value * 100 / total) + "%)";
+        tx -= ctx.measureText(text).width / 2;
+
+        // draw the label
+        ctx.fillStyle = "#000";
+        ctx.fillText(text, tx, ty);
+
+        // move to next 
+        start += angle;
+    });
+
+    if (dr > 0) {
+        slice("#fff", dr, 0, 2 * Math.PI)
     }
 };
