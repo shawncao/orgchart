@@ -75,23 +75,12 @@
 
             // draw pie
             window.setTimeout(function () {
-                orgchart.Pie([{
-                        key: "Satisfied",
-                        value: 1043
-                    },
-                    {
-                        key: "Neutral",
-                        value: 563
-                    },
-                    {
-                        key: "Unsatisfied",
-                        value: 510
-                    },
-                    {
-                        key: "No comment",
-                        value: 175
-                    }
-                ], true);
+                orgchart.Pie({
+                    "Satisfied": 1043,
+                    "Neutral": 563,
+                    "Unsatisfied": 510,
+                    "No comment": 175
+                }, true);
             }, 2000);
         });
     </script>

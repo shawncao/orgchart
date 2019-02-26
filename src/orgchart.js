@@ -634,9 +634,10 @@ OrgChart.prototype.Pie = function (data, donut) {
     var r = Math.min(w, h) / 3 / dpr;
 
     // total value
-    var total = data.reduce(function (sum, item) {
-        return sum + item.value;
-    }, 0.0);
+    var total = 0.0;
+    for (var k in data) {
+        total += data[k];
+    }
 
     // define a function to draw a slice
     var slice = function (c, r, start, end) {
@@ -652,8 +653,9 @@ OrgChart.prototype.Pie = function (data, donut) {
     var index = 0;
     var bound = colors.length;
     var start = 0;
-    data.forEach(function (item) {
-        var angle = (item.value / total) * 2 * Math.PI;
+    for (var item in data) {
+        var value = data[item];
+        var angle = (value / total) * 2 * Math.PI;
         slice(colors[index++ % bound], r, start, start + angle);
 
         // place the text
@@ -661,7 +663,7 @@ OrgChart.prototype.Pie = function (data, donut) {
         var ty = y + (dr + r) / 2 * Math.sin(start + angle / 2);
 
         // measure text width and shift x to fit half
-        var text = item.key + " (" + Math.round(item.value * 100 / total) + "%)";
+        var text = item + " (" + Math.round(value * 100 / total) + "%)";
         tx -= ctx.measureText(text).width / 2;
 
         // draw the label
@@ -670,7 +672,7 @@ OrgChart.prototype.Pie = function (data, donut) {
 
         // move to next 
         start += angle;
-    });
+    };
 
     if (dr > 0) {
         slice("#fff", dr, 0, 2 * Math.PI)
