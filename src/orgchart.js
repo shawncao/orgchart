@@ -621,7 +621,7 @@ OrgChart.prototype.Draw = function () {
 };
 
 // add a simple pie chart drawing function
-OrgChart.prototype.Pie = function (data, donut) {
+OrgChart.prototype.Pie = function (data, donut, title) {
     var colors = ["#fe3", "#f62", "#59f", "#978", "#abc", "#f3d", "#fc8", "#41e"];
     var w = this.Canvas.width;
     var h = this.Canvas.height;
@@ -632,6 +632,15 @@ OrgChart.prototype.Pie = function (data, donut) {
     var x = w / dpr / 2;
     var y = h / dpr / 2;
     var r = Math.min(w, h) / 3 / dpr;
+
+    if (!!title) {
+        var origin = ctx.font;
+        ctx.font = "1.3em Arial";
+        // draw title at (x-width/2, y-r-20)
+        ctx.fillStyle = 'red';
+        ctx.fillText(title, x - ctx.measureText(title).width / 2, y - r - 20);
+        ctx.font = origin;
+    }
 
     // total value
     var total = 0.0;
