@@ -7,10 +7,10 @@ It requires HTML5 canvas.
 
 Example1:
 
-[Example 1](https://github.com/shawncao/orgchart/blob/master/orgchart1.png "example 1")
+![Example 1](./orgchart1.png "example 1")
 
 
 Example2 (images display, like name card):
-[Example 2](https://github.com/shawncao/orgchart/blob/master/orgchart2.png "example 2")
+![Example 2](./orgchart2.png "example 2")
 
 To see the source code sample, please go to test folder
