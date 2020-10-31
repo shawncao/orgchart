@@ -7,9 +7,11 @@
     <!--script src="Scripts/orgchart.js" type="text/javascript"></script-->
     <script src="../src/orgchart.js" type="text/javascript"></script>
     <script type="text/javascript" language="javascript">
-        $(document).ready(function () {
+        var orgchart;
+        //draw orgchart
+        function org() {
+            orgchart = new OrgChart('chart');
             // Utility.CubeBg = '#777';
-            var orgchart = new OrgChart('chart');
             Utility.ImageDimen = {
                 width: 70,
                 height: 70
@@ -32,7 +34,7 @@
                 },
                 m: '3 directs'
             }));
-            orgchart.Push(new Cube(4, 2, {
+            orgchart.Push(new Cube(3, 2, {
                 n: "3",
                 c: 'blue',
                 i: {
@@ -41,7 +43,7 @@
                 },
                 l: true
             }));
-            orgchart.Push(new Cube(3, 2, {
+            orgchart.Push(new Cube(4, 2, {
                 n: "4",
                 c: 'blue',
                 i: {
@@ -57,7 +59,7 @@
                     text: ['Jay (alias)', 'VP', '425-666-3333']
                 }
             }));
-            orgchart.Push(new Cube(6, 4, {
+            orgchart.Push(new Cube(6, 5, {
                 n: "6",
                 c: 'blue',
                 i: {
@@ -72,17 +74,20 @@
                 alert('search:' + id);
             };
             orgchart.Draw();
+        }
 
-            // draw pie
-            window.setTimeout(function () {
-                orgchart.Pie({
-                    "Satisfied": 1043,
-                    "Neutral": 563,
-                    "Unsatisfied": 510,
-                    "No comment": 175
-                }, true, "DEMO DONUT CHART");
-            }, 2000);
-        });
+        // draw pie
+        function donut() {
+            orgchart.Pie({
+                "Satisfied": 1043,
+                "Neutral": 563,
+                "Unsatisfied": 510,
+                "No comment": 175
+            }, true, "DEMO DONUT CHART");
+        }
+
+        //when page loads display orgchart automatically
+        $(document).ready(org);
     </script>
 </head>
 
@@ -90,7 +95,7 @@
     <h2>Welcome to orgchart!</h2>
     <p>
         <font color='green'>Here is the source code of below chart:</font>
-        <pre>
+    <pre>
             $(document).ready(function () {
                 var orgchart = new OrgChart('chart');
                 orgchart.Push(new Cube(1, 0, "root nextline maximum text size sit how can I help?", 'red'));
@@ -111,8 +116,11 @@
         </pre>
     </p>
     <p>
-        You can also find on <a href="https://github.com/shawncao/orgchart" title="Org Chart libirary for HTML5">github</a>.
+        You can also find on <a href="https://github.com/shawncao/orgchart"
+            title="Org Chart libirary for HTML5">github</a>.
     </p>
+    <button type="button" onclick="donut()">Show Donut Chart</button>
+    <button type="button" onclick="org()">Show Orgchart</button>
     <br />
     Example:<br />
     <!--style="background:pink"-->
