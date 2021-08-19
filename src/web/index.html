@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Simple Org Chart - Who is there?</title>
+    <script src="scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="scripts/orgchart.min.js?v=5" type="text/javascript"></script>
+    <script src="scripts/oc.min.js?v=31" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.min.css?v=4">
+    <link rel="icon" href="images/icon.png">
+</head>
+
+<body ID="BodyContent">
+    <h2>Welcome To Simple Org Chart, <span id='user'></span>!</h2>
+    <div>
+        <!-- https://www.w3schools.com/charsets/ref_utf_misc_symbols.asp -->
+        <a title='syntax alias, partial name, alias list separated by comma'>&#x2637;</a>
+        <input id="alias" type="text" placeholder="search people..." onkeydown="go(this)" />
+    </div>
+    <div>
+        #: <a href="/"> home </a> | <a href="#@loc"> locations </a> | <a href="#@role"> roles </a> | <a href="#@title">
+            titles </a> | <a href="#@status"> status </a> | <a href="#@type"> types </a> | <a href="#@country">
+            countries </a> | <a href="#@state"> states </a> | <a href="#$l9"> L9 </a> | <a href="#$l8"> L8 </a> | <a
+            href="#$l7"> L7 </a> | <a href="#$pinday"> pinniversary </a>
+    </div>
+    <div>
+        #: <span id="list"></span> ( <a href="javascript: cl();">clear</a>
+        |
+        <a href="javascript: sl();void(0)">show</a> )
+    </div>
+    <canvas id="chart"></canvas>
+    <br />
+    <p>
+        Graph library is from <a href="https://github.com/shawncao/orgchart"
+            title="Org Chart libirary for HTML5">github</a>.
+        | Feedback @ caoxhua@gmail.com
+    </p>
+</body>
+
+</html>

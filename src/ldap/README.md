@@ -1,0 +1,2 @@
+This module is an example how to craw organizational data through LDAP database which is used widely in industry.
+The generated data should be placed in `~/web/scripts` so taht the web page can download and parse to build the org chart.
